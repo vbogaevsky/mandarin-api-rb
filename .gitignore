@@ -1,0 +1,17 @@
+log/*
+!/log/.keep
+/tmp
+#/config/*.yml
+#/config/unicorn.rb
+.idea
+.versions.conf
+public/assets
+public/system
+vendor/bundle
+#!public/favicon.ico
+*.DS_Store
+.env
+rspec_results.html
+backup/.*
+coverage
+.rubocop.yml

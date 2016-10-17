@@ -1,0 +1,41 @@
+@startuml
+/'
+actor Foo1
+boundary Foo2
+control Foo3
+entity Foo4
+database Foo5
+Foo1 -> Foo2 : To boundary
+Foo1 -> Foo3 : To control
+Foo1 -> Foo4 : To entity
+Foo1 -> Foo5 : To database
+'/
+boundary Mandarin
+'control Controller
+boundary Application
+entity ResultProcessor
+control ResponseHandler
+'control SuccessCallback
+'control FailureCallback
+'actor Client
+boundary MandarinApiGem
+control Responder
+
+'control ResultMatcher
+'actor Gem
+'entity Success
+'entity Failure
+
+Mandarin -> Application : HttpRequest
+Application -> MandarinApiGem : RequestParams
+MandarinApiGem -> Responder : RequestParams
+Responder -> ResponseHandler :  "<font color=green><b>SuccessResponse"
+Responder -> ResponseHandler :  "<font color=red><b>FailureResponse"
+ResponseHandler -> ResultProcessor : Result
+' SuccessCallback -> Application : Result
+' FailureCallback -> Application : Result
+' Application -> AppInternal : DoBuisnesAction
+@enduml
+
+
+'Client -> Gem : ParsedReport
