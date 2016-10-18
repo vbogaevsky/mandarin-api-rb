@@ -1,5 +1,7 @@
 # frozen_string_literal: true
+
 RSpec.describe MandarinApi::Wrapper do
+  include_context 'mocks'
   describe 'request' do
     let(:wrapper) do
       MandarinApi::Wrapper
@@ -12,6 +14,7 @@ RSpec.describe MandarinApi::Wrapper do
         }
       }
     end
+    let(:x_auth) { 'x-auth' }
     let(:mandarin_adress) { 'https://secure.mandarinpay.com/' }
     let(:expected) do
       {
@@ -21,6 +24,7 @@ RSpec.describe MandarinApi::Wrapper do
       }
     end
     it 'sends request with passed action' do
+      allow(wrapper).to receive(:generate_x_auth_header).and_return(x_auth)
       allow(MandarinApi).to \
         receive_message_chain(:config, :request_url).and_return(mandarin_adress)
       expect(wrapper.request('api/card-bindings', params)).to eq expected

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'webmock/rspec'
+require 'mocks'
 require 'faker'
 
 Dir['./lib/**/*.rb'].each { |f| require f }

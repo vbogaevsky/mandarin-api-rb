@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'json'
 require 'rest-client'
 module MandarinApi
   # Wraps request sending
@@ -30,7 +31,7 @@ module MandarinApi
     end
 
     def json(params = {})
-      key_transform(params).to_json
+      JSON.generate(key_transform(params))
     end
 
     def key_transform(hash)
