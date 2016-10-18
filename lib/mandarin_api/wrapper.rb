@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'rest-client'
 module MandarinApi
   # Wraps request sending
   class Wrapper
@@ -8,8 +9,9 @@ module MandarinApi
     end
 
     def request(endpoint, params = {})
-      RestClient.post(URI.join(MandarinApi.config.request_url, endpoint),
-                      json(params), header)
+      url = URI.join(MandarinApi.config.request_url, endpoint).to_s
+      result = RestClient.post url, json(params), header
+      JSON.parse result
     end
 
     private
@@ -23,7 +25,7 @@ module MandarinApi
 
     def generate_x_auth_header(merchant_id, secret)
       request_id = "#{Time.now}_#{Time.now.to_i}_#{rand}"
-      hash = Digest::SHA256.new "#{merchant_id}-#{request_id}-#{secret}"
+      hash = Digest::SHA256.hexdigest "#{merchant_id}-#{request_id}-#{secret}"
       "#{merchant_id}-#{hash}-#{request_id}"
     end
 
