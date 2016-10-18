@@ -46,17 +46,17 @@
 class MandarinApi
   extend Dry::Configurable
 
-  def assign_card(card)
-    # call api
-  end
-
-  def process_callback(request_params, response_handler)
-    response = Responder.new.process(request_params)
-    response_handler.success(response.data) if response.success
-    response_handler.success(response.data) if response.success
+  def assign_card(user)
+    MandarinApi::CardManager.new.assign_card user
   end
 
   def pay(client, amount)
     # call api
+  end
+
+  def process_callback(request_params, response_handler)
+    response = MandarinApi::Responder.new.process(request_params)
+    response_handler.success(response.data) if response.success
+    response_handler.success(response.data) if response.success
   end
 end
