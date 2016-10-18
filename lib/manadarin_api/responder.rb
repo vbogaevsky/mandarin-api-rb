@@ -1,6 +1,6 @@
 module MandarinApi
   # Processes callbacks from mandarinpay
-  class CallbackProcessor
+  class Responder
     def initialize(data)
       @process_status = data[:process_status]
       @data = data
