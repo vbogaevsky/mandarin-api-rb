@@ -42,21 +42,25 @@
 #     end
 #   end
 # end
-
-class MandarinApi
+require 'dry-configurable'
+# Main module
+module MandarinApi
   extend Dry::Configurable
-
-  def assign_card(user)
+  def self.assign_card(user)
     MandarinApi::CardManager.new.assign_card user
   end
 
-  def pay(client, amount)
+  def self.pay(_client, _amount)
     # call api
   end
 
-  def process_callback(request_params, response_handler)
+  def self.process_callback(request_params, response_handler)
     response = MandarinApi::Responder.new.process(request_params)
     response_handler.success(response.data) if response.success
     response_handler.success(response.data) if response.success
   end
 end
+
+require 'mandarin_api/card_manager'
+require_relative 'mandarin_api/responder'
+require_relative 'mandarin_api/wrapper'

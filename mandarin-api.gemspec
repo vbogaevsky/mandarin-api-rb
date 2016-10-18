@@ -6,7 +6,10 @@ Gem::Specification.new do |s|
   s.licenses = ['MIT']
   s.summary = 'mandarinpay.com api wrapper for ruby'
   s.homepage = 'https://github.com/vbogaevsky/mandarin-api-rb'
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.extra_rdoc_files = ['README.md']
+  s.require_paths = ['lib']
 
   s.add_development_dependency('webmock', '~> 2.1')
   s.add_development_dependency('rspec', '~> 3.0')
@@ -14,6 +17,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pry-doc', '~> 0')
   s.add_development_dependency('rdoc', '>= 2.4.2', '< 5.0')
   s.add_development_dependency('rubocop', '~> 0')
+  s.add_development_dependency('faker', '>= 1.6', '< 1.7')
 
   s.add_dependency 'rest-client', '>= 2.0', '< 3.0'
   s.add_dependency 'dry-configurable', '>= 0.1.0', '< 1.0'
