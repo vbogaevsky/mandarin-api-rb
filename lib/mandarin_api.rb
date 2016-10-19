@@ -45,7 +45,9 @@
 require 'dry-configurable'
 # Main module
 module MandarinApi
-  extend Dry::Configurable
+  class << self
+    attr_accessor :config
+  end
   def self.assign_card(user)
     MandarinApi::CardManager.new.assign_card user
   end
@@ -59,8 +61,17 @@ module MandarinApi
     response_handler.success(response.data) if response.success
     response_handler.success(response.data) if response.success
   end
+
+  def self.config
+    @configuration ||= Configuration.new
+  end
+
+  def self.configure
+    yield(config)
+  end
 end
 
 require 'mandarin_api/card_manager'
-require_relative 'mandarin_api/responder'
-require_relative 'mandarin_api/wrapper'
+require 'mandarin_api/responder'
+require 'mandarin_api/wrapper'
+require 'mandarin_api/configuration'
