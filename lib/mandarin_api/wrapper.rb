@@ -11,7 +11,7 @@ module MandarinApi
 
     def request(endpoint, params = {})
       url = URI.join(MandarinApi.config.request_url, endpoint).to_s
-      result = RestClient.post url, json(params), header
+      result = RestClient.post(url, json(params), header)
       JSON.parse result
     end
 
@@ -19,8 +19,8 @@ module MandarinApi
 
     def header
       {
-        'Content-Type' => 'application/json',
-        'X-Auth' => generate_x_auth_header(@merchant_id, @secret)
+        content_type: :json,
+        x_auth: generate_x_auth_header(@merchant_id, @secret)
       }
     end
 
