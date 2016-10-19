@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module MandarinApi
   # Processes callbacks from mandarinpay
   class Responder
