@@ -25,7 +25,7 @@ module MandarinApi
     end
 
     def generate_x_auth_header(merchant_id, secret)
-      request_id = "#{Time.now}_#{Time.now.to_i}_#{rand}"
+      request_id = SecureRandom.uuid
       hash = Digest::SHA256.hexdigest "#{merchant_id}-#{request_id}-#{secret}"
       "#{merchant_id}-#{hash}-#{request_id}"
     end
