@@ -56,6 +56,14 @@ module MandarinApi
     # call api
   end
 
+  def self.payout(order_id, amount, assigned_card_uuid)
+    params = {
+      order_id: order_id, amount: amount,
+      assigned_card_uuid: assigned_card_uuid
+    }
+    MandarinApi::PaymentManager.new.perform_payout params
+  end
+
   def self.process_callback(request_params, response_handler)
     response = MandarinApi::Responder.new.process(request_params)
     response_handler.success(response.data) if response.success
@@ -72,6 +80,7 @@ module MandarinApi
 end
 
 require 'mandarin_api/card_manager'
+require 'mandarin_api/payment_manager'
 require 'mandarin_api/responder'
 require 'mandarin_api/wrapper'
 require 'mandarin_api/configuration'
