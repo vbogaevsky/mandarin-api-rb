@@ -67,7 +67,7 @@ module MandarinApi
   def self.process_callback(request_params, response_handler)
     response = MandarinApi::Responder.new.process(request_params)
     response_handler.success(response.data) if response.success
-    response_handler.success(response.data) if response.success
+    response_handler.failure(response.data) if response.failure
   end
 
   def self.config
