@@ -1,6 +1,6 @@
 # mandarin-api-rb
 mandarinpay.com api wrapper for ruby
-
+[![CodeClimate](https://codeclimate.com/github/vbogaevsky/mandarin-api-rb/badges/gpa.svg)](https://codeclimate.com/github/vbogaevsky/mandarin-api-rb)
 **mandarin-api** provides necessary API to interact with **Mandarin**.
 ##**Usage:**
 To use mandarin-api you will need to specify config file with `merchant_id`, `secret`, and `request_url`.
