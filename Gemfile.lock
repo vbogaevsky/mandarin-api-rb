@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     mandarin-api (0.0.2)
-      dry-configurable (>= 0.1.0, < 1.0)
       rest-client (>= 2.0, < 3.0)
 
 GEM
@@ -11,14 +10,11 @@ GEM
     addressable (2.4.0)
     ast (2.3.0)
     coderay (1.1.1)
-    concurrent-ruby (1.0.2)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     domain_name (0.5.20160826)
       unf (>= 0.0.5, < 1.0.0)
-    dry-configurable (0.1.7)
-      concurrent-ruby (~> 1.0)
     faker (1.6.6)
       i18n (~> 0.5)
     hashdiff (0.3.0)

@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency('faker', '>= 1.6', '< 1.7')
 
   s.add_dependency 'rest-client', '>= 2.0', '< 3.0'
-  s.add_dependency 'dry-configurable', '>= 0.1.0', '< 1.0'
 
   s.required_ruby_version = '>= 2.2.0'
 end

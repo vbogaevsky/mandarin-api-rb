@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-
-require 'dry-configurable'
 # Main module
 module MandarinApi
   class << self
