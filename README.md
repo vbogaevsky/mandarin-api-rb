@@ -30,6 +30,19 @@ MandarinApi.assign_card user
 ```
 Keep id, it will be used for pay/payouts requests. Use userWebLink to redirect user to Mandarin page for card data input.
 
+###**Example of performing payment:**
+```ruby
+# order_id - id of order/bill, etc. in your system.
+# amount - sum of payout
+# assigned_card_uuid - the id you received assigning the card
+MandarinApi.payment(order_id, amount, assigned_card_uuid)
+```
+#payout will return a hash with transaction id.
+###**Example:**
+```ruby
+{ 'id' => '721a5185314740aaa304278fb1d8ee63' }
+```
+
 ###**Example of performing payout:**
 ```ruby
 # order_id - id of order/bill, etc. in your system.

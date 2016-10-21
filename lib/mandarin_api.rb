@@ -10,8 +10,12 @@ module MandarinApi
     MandarinApi::CardManager.new.assign_card user
   end
 
-  def self.pay(_client, _amount)
-    # call api
+  def self.pay(order_id, amount, assigned_card_uuid)
+    params = {
+      order_id: order_id, amount: amount,
+      assigned_card_uuid: assigned_card_uuid
+    }
+    MandarinApi::PaymentManager.new.perform_payment params
   end
 
   def self.payout(order_id, amount, assigned_card_uuid)
