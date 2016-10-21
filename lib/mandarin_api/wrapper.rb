@@ -11,8 +11,17 @@ module MandarinApi
 
     def request(endpoint, params = {})
       url = URI.join(MandarinApi.config.request_url, endpoint).to_s
-      result = RestClient.post(url, json(params), header)
-      JSON.parse result
+      RestClient.post(url, json(params), header) do |response|
+        case response.code
+        when 200
+          JSON.parse response.body
+        else
+          {
+            'status' => response.status,
+            'error' => 'Invalid request'
+          }
+        end
+      end
     end
 
     private

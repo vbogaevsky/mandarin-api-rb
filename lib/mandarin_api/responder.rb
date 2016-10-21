@@ -5,11 +5,12 @@ module MandarinApi
     def initialize(data)
       @data = data
       @secret = MandarinApi.config.secret
-      @process_status = if sign_is_valid
-                          data[:status]
-                        else
-                          'failed'
-                        end
+      if sign_is_valid
+        @process_status = data[:status]
+      else
+        @process_status = 'failed'
+        @data = { sign: 'Wrong signature!' }
+      end
     end
 
     def success
