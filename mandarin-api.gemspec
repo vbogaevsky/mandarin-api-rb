@@ -3,12 +3,13 @@ Gem::Specification.new do |s|
   s.name = 'mandarin-api'
   s.version = '0.0.0'
   s.authors = ['Vladimir Bogaevsky', 'Boris Kraportov']
+  s.email = 'gitvbogaevsky@gmail.com'
   s.licenses = ['MIT']
   s.summary = 'mandarinpay.com api wrapper for ruby'
   s.homepage = 'https://github.com/vbogaevsky/mandarin-api-rb'
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.extra_rdoc_files = ['README.md']
+  s.extra_rdoc_files = ['README.md', 'plantuml/callbacks.puml']
   s.require_paths = ['lib']
 
   s.add_development_dependency('webmock', '~> 2.1')
