@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mandarin-api (0.0.0)
+    mandarin-api (0.0.1)
       dry-configurable (>= 0.1.0, < 1.0)
       rest-client (>= 2.0, < 3.0)
 
