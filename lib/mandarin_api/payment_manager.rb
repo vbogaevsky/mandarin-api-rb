@@ -14,6 +14,10 @@ module MandarinApi
       perform(params, 'reversal', :refund_request_body)
     end
 
+    def perform_rebill(params)
+      perform(params, 'pay', :rebill_request_body)
+    end
+    
     private
 
     def perform(params, action, body)
@@ -25,9 +29,7 @@ module MandarinApi
 
     def normal_request_body(params, action)
       {
-        payment: {
-          order_id: params[:order_id], action: action, price: params[:amount]
-        },
+        payment: payment(params, action),
         target: { card: params[:assigned_card_uuid] }
       }
     end
@@ -37,6 +39,17 @@ module MandarinApi
         payment: { order_id: params[:order_id], action: action },
         target: { transaction: params[:transaction_uuid] }
       }
+    end
+
+    def rebill_request_body(params, action)
+      {
+        payment: payment(params, action),
+        target: { rebill: params[:transaction_uuid] }
+      }
+    end
+
+    def payment(params, action)
+      { order_id: params[:order_id], action: action, price: params[:amount] }
     end
   end
 end

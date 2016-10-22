@@ -29,6 +29,14 @@ module MandarinApi
     MandarinApi::PaymentManager.new.perform_refund params
   end
 
+  def self.rebill(order_id, amount, transaction_uuid)
+    params = {
+      order_id: order_id, amount: amount,
+      transaction_uuid: transaction_uuid
+    }
+    MandarinApi::PaymentManager.new.perform_rebill params
+  end
+  
   def self.process_callback(request_params, response_handler)
     response = MandarinApi::Responder.new.process(request_params)
     response_handler.success(response.data) if response.success

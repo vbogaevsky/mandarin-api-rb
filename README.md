@@ -68,6 +68,19 @@ MandarinApi.refund(order_id, transaction_uuid)
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
 
+###**Example of performing rebill:**
+```ruby
+# order_id - id of order/bill, etc. in your system.
+# amount - sum of payment
+# transaction_uuid - the uuid you received performing transaction
+MandarinApi.rebill(order_id, amount, transaction_uuid)
+```
+`#rebill` will return a hash with transaction id.
+###**Example:**
+```ruby
+{ 'id' => '721a5185314740aaa304278fb1d8ee63' }
+```
+
 
 You will have to provide a link to receive callbacks from Mandarin.
 MandarinApi.process_callback takes as arguments body of a callback serialized
