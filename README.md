@@ -37,7 +37,7 @@ Keep id, it will be used for pay/payouts requests. Use userWebLink to redirect u
 # assigned_card_uuid - the id you received assigning the card
 MandarinApi.payment(order_id, amount, assigned_card_uuid)
 ```
-#payout will return a hash with transaction id.
+`#payment` will return a hash with transaction id.
 ###**Example:**
 ```ruby
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
@@ -50,11 +50,25 @@ MandarinApi.payment(order_id, amount, assigned_card_uuid)
 # assigned_card_uuid - the id you received assigning the card
 MandarinApi.payout(order_id, amount, assigned_card_uuid)
 ```
-#payout will return a hash with transaction id.
+`#payout` will return a hash with transaction id.
 ###**Example:**
 ```ruby
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
+
+###**Example of performing refund:**
+```ruby
+# order_id - id of order/bill, etc. in your system.
+# transaction_uuid - the uuid you received performing transaction
+MandarinApi.refund(order_id, transaction_uuid)
+```
+`#refund` will return a hash with transaction id.
+###**Example:**
+```ruby
+{ 'id' => '721a5185314740aaa304278fb1d8ee63' }
+```
+
+
 You will have to provide a link to receive callbacks from Mandarin.
 MandarinApi.process_callback takes as arguments body of a callback serialized
 to hash with symbolized keys and an instance with `#success` and `#failure` methods,

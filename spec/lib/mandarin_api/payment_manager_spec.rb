@@ -9,7 +9,7 @@ RSpec.describe MandarinApi::PaymentManager do
       assigned_card_uuid: '0eb51e74-e704-4c36-b5cb-8f0227621518'
     }
   end
-  let(:request_body) do
+  let(:normal_request_body) do
     {
       payment: { order_id: 123_321, action: action, price: 35_000 },
       target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' }
@@ -23,9 +23,9 @@ RSpec.describe MandarinApi::PaymentManager do
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
-        .with('/api/transactions', request_body)
+        .with('/api/transactions', normal_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
-        .with('/api/transactions', request_body)
+        .with('/api/transactions', normal_request_body)
       payment_manager.perform_payout params
     end
   end
@@ -38,10 +38,35 @@ RSpec.describe MandarinApi::PaymentManager do
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
-        .with('/api/transactions', request_body)
+        .with('/api/transactions', normal_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
-        .with('/api/transactions', request_body)
+        .with('/api/transactions', normal_request_body)
       payment_manager.perform_payment params
+    end
+  end
+
+  describe '#perform_refund' do
+    let(:refund_request_body) do
+      {
+        payment: { order_id: 123_321, action: 'reversal' },
+        target: { transaction: '43913ddc000c4d3990fddbd3980c1725' }
+      }
+    end
+    let(:params) do
+      {
+        order_id: 123_321, transaction_uuid: '43913ddc000c4d3990fddbd3980c1725'
+      }
+    end
+    it 'calls wrapper instance with args' do
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :merchant_id).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
+        .with('/api/transactions', refund_request_body)
+      expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
+        .with('/api/transactions', refund_request_body)
+      payment_manager.perform_refund params
     end
   end
 end
