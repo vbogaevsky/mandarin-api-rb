@@ -2,6 +2,7 @@
 module MandarinApi
   # Processes callbacks from mandarinpay
   class Responder
+    attr_reader :data
     def initialize(data)
       @data = data
       @secret = MandarinApi.config.secret
