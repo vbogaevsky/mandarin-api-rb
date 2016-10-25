@@ -30,6 +30,23 @@ MandarinApi.assign_card user
 ```
 Keep id, it will be used for pay/payouts requests. Use userWebLink to redirect user to Mandarin page for card data input.
 
+###**Example of oneway card binding:**
+```ruby
+MandarinApi.oneway_assign_card user, card_number
+```
+`user` should be an instance or a Struct, and should respond to `#email` and `#phone` methods
+`#phone` should be serialized, for example '+79091234567' is correctly serialized number.
+`#assign_card` will return a hash.
+###**Example:**
+```ruby
+{
+  'id' => '0eb51e74-e704-4c36-b5cb-8f0227621518',
+}
+```
+Keep id, it will be used for pay/payouts requests. Use userWebLink to redirect user to Mandarin page for card data input.
+Oneway binded card can only be used for payouts.
+
+
 ###**Example of performing payment:**
 ```ruby
 # order_id - id of order/bill, etc. in your system.

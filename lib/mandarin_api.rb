@@ -8,6 +8,10 @@ module MandarinApi
     MandarinApi::CardManager.new.assign_card user
   end
 
+  def self.oneway_assign_card(user, card)
+    MandarinApi::CardManager.new.one_side_assign_card user, card
+  end
+
   def self.pay(order_id, amount, assigned_card_uuid)
     params = {
       order_id: order_id, amount: amount,
@@ -36,9 +40,9 @@ module MandarinApi
     }
     MandarinApi::PaymentManager.new.perform_rebill params
   end
-  
+
   def self.process_callback(request_params, response_handler)
-    response = MandarinApi::Responder.new.process(request_params)
+    response = MandarinApi::Responder.new(request_params)
     response_handler.success(response.data) if response.success
     response_handler.failure(response.data) if response.failure
   end
