@@ -6,7 +6,7 @@ module MandarinApi
       @data = data
       @secret = MandarinApi.config.secret
       if sign_is_valid
-        @process_status = data[:status]
+        @process_status = @data[:status]
       else
         @process_status = 'failed'
         @data = { sign: 'Wrong signature!' }
@@ -33,6 +33,7 @@ module MandarinApi
       temp_string = ''
       @data.sort.to_h.keys.each do |key|
         temp_string += @data[key].to_s + '-'
+        temp_string
       end
       temp_string + @secret
     end
