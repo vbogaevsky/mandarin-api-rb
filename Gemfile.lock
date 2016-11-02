@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mandarin-api (0.0.7)
+    mandarin-api (0.0.8)
       rest-client (>= 2.0, < 3.0)
 
 GEM

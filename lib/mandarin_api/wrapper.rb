@@ -16,7 +16,7 @@ module MandarinApi
         when 200
           JSON.parse response.body
         else
-          { 'status' => response.status, 'error' => 'Invalid request' }
+          { 'status' => response.code, 'error' => 'Invalid request' }
         end
       end
     end

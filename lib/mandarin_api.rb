@@ -4,6 +4,7 @@ module MandarinApi
   class << self
     attr_accessor :config
   end
+
   def self.assign_card(user)
     MandarinApi::CardManager.new.assign_card user
   end
