@@ -7,7 +7,7 @@ RSpec.describe MandarinApi::CardManager do
   User = Struct.new('User', :email, :phone)
   describe 'assign_card' do
     let(:params) do
-      { customer_info: { email: 'ololo@gmail.com', phone: '8-909-999-88-77' } }
+      { customer_info: { email: 'ololo@gmail.com', phone: '+79099998877' } }
     end
     it 'calls wrapper instance with args' do
       allow(MandarinApi).to \
@@ -38,6 +38,12 @@ RSpec.describe MandarinApi::CardManager do
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/card-bindings', params)
       card_manager.one_side_assign_card user, card
+    end
+  end
+
+  describe 'phone' do
+    it 'serializes phone' do
+      expect(card_manager.send(:phone, user)).to eq '+79099998877'
     end
   end
 end
