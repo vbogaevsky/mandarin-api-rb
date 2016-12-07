@@ -81,8 +81,15 @@ MandarinApi.charge(order_id, amount, user)
 ```
 `user` should be an instance or a Struct, and should respond to `#email` and `#phone` methods
 `#phone` should be serialized, for example '+79091234567' is correctly serialized number.
-`#assign_card` will return a hash.
-
+`#charge` will return a hash.
+###**Example:**
+```ruby
+{
+  "id": "43913ddc000c4d3990fddbd3980c1725",
+  "userWebLink": "https://secure.mandarinpay.com/Pay' \
+    '?transaction=0eb51e74-e704-4c36-b5cb-8f0227621518"
+}
+```
 
 ###**Example of performing refund:**
 ```ruby
