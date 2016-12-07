@@ -2,6 +2,10 @@
 module MandarinApi
   # Pergorms payouts and payins
   class PaymentManager
+    def perform_charge(params)
+      perform(params, 'pay', :charge_request_body)
+    end
+
     def perform_payout(params)
       perform(params, 'payout', :normal_request_body)
     end
@@ -17,7 +21,7 @@ module MandarinApi
     def perform_rebill(params)
       perform(params, 'pay', :rebill_request_body)
     end
-    
+
     private
 
     def perform(params, action, body)
@@ -31,6 +35,14 @@ module MandarinApi
       {
         payment: payment(params, action),
         target: { card: params[:assigned_card_uuid] }
+      }
+    end
+
+    def charge_request_body(params, action)
+      {
+        payment: payment(params, action),
+        customer_info: { email: params[:email], phone: params[:phone] },
+        custom_values: []
       }
     end
 

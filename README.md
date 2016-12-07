@@ -73,6 +73,17 @@ MandarinApi.payout(order_id, amount, assigned_card_uuid)
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
 
+###**Example of charging user without card binding**
+```ruby
+# order_id - id of order/bill, etc. in your system.
+# amount - sum of payout
+MandarinApi.charge(order_id, amount, user)
+```
+`user` should be an instance or a Struct, and should respond to `#email` and `#phone` methods
+`#phone` should be serialized, for example '+79091234567' is correctly serialized number.
+`#assign_card` will return a hash.
+
+
 ###**Example of performing refund:**
 ```ruby
 # order_id - id of order/bill, etc. in your system.

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mandarin-api (0.0.9)
+    mandarin-api (0.0.10)
       rest-client (>= 2.0, < 3.0)
 
 GEM
@@ -92,4 +92,4 @@ DEPENDENCIES
   webmock (~> 2.1)
 
 BUNDLED WITH
-   1.12.5
+   1.13.6

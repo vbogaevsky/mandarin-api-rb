@@ -15,6 +15,36 @@ RSpec.describe MandarinApi::PaymentManager do
       target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' }
     }
   end
+  let(:charge_request_body) do
+    {
+      payment: { order_id: 123_321, action: action, price: 35_000 },
+      customer_info: { email: email, phone: phone },
+      custom_values: []
+    }
+  end
+  describe '#perform_charge' do
+    let(:email) { Faker::Internet.free_email }
+    let(:phone) { "+7#{Faker::Number.between(100_000_000, 999_999_999)}" }
+    let(:action) { 'pay' }
+    let(:params) do
+      {
+        order_id: 123_321, amount: 35_000,
+        email: email, phone: phone, custom_values: []
+      }
+    end
+    it 'calls wrapper instance with args' do
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :merchant_id).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
+        .with('/api/transactions', charge_request_body)
+      expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
+        .with('/api/transactions', charge_request_body)
+      payment_manager.perform_charge params
+    end
+  end
+
   describe '#perform_payout' do
     let(:action) { 'payout' }
     it 'calls wrapper instance with args' do

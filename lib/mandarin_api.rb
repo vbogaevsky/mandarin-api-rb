@@ -13,6 +13,13 @@ module MandarinApi
     MandarinApi::CardManager.new.one_side_assign_card user, card
   end
 
+  def self.charge(order_id, amount, user)
+    params = {
+      order_id: order_id, amount: amount, email: user.email, phone: user.phone
+    }
+    MandarinApi::PaymentManager.new.perform_charge params
+  end
+
   def self.pay(order_id, amount, assigned_card_uuid)
     params = {
       order_id: order_id, amount: amount,
