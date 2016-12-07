@@ -22,7 +22,11 @@ module MandarinApi
     private
 
     def phone(user)
-      '+' + user.phone.gsub(/[^\d]+/, '').gsub(/^8/, '7')
+      if user.phone.nil?
+        '+70000000000'
+      else
+        '+' + user.phone.gsub(/[^\d]+/, '').gsub(/^8/, '7')
+      end
     end
   end
 end
