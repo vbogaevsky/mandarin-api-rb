@@ -41,7 +41,7 @@ module MandarinApi
     def charge_request_body(params, action)
       {
         payment: payment(params, action),
-        customer_info: { email: params[:email], phone: params[:phone] },
+        customer_info: { email: params[:email], phone: phone(params[:phone]) },
         custom_values: []
       }
     end
@@ -62,6 +62,14 @@ module MandarinApi
 
     def payment(params, action)
       { order_id: params[:order_id], action: action, price: params[:amount] }
+    end
+
+    def phone(phone)
+      if phone.nil?
+        '+70000000000'
+      else
+        '+' + phone.gsub(/[^\d]+/, '').gsub(/^8/, '7')
+      end
     end
   end
 end
