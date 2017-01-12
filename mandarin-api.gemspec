@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 Gem::Specification.new do |s|
   s.name = 'mandarin-api'
-  s.version = '0.2.0'
+  s.version = '0.2.1'
   s.authors = ['Vladimir Bogaevsky']
   s.email = 'gitvbogaevsky@gmail.com'
   s.licenses = ['MIT']
