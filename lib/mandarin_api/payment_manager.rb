@@ -34,9 +34,9 @@ module MandarinApi
     def normal_request_body(params, action)
       body = {
         payment: payment(params, action),
-        target: { card: params[:assigned_card_uuid] },
+        target: { card: params[:assigned_card_uuid] }
       }
-      body[:extra] = systemize(params[:extra]) unless params[:extra].empty?
+      body[:custom_values] = params[:custom_values] unless params[:custom_values].empty?
       body
     end
 
@@ -45,9 +45,8 @@ module MandarinApi
         payment: payment(params, action),
         customer_info: { email: params[:email], phone: phone(params[:phone]) }
       }
-      body[:custom_values] = systemize(params[:custom_values]) if params[:custom_values]
+      body[:custom_values] = params[:custom_values] if params[:custom_values]
       body[:urls] = params[:urls] if params[:urls]
-      body[:extra] = systemize(params[:extra]) if params[:extra]
       body
     end
 
@@ -67,14 +66,6 @@ module MandarinApi
 
     def payment(params, action)
       { order_id: params[:order_id], action: action, price: params[:amount] }
-    end
-
-    def systemize(options)
-      result = []
-      options.each do |key, value|
-        result << { name: key.to_s, value: value }
-      end
-      result
     end
 
     def phone(phone)

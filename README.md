@@ -65,7 +65,7 @@ Oneway binded card can only be used for payouts.
 # order_id - id of order/bill, etc. in your system.
 # amount - sum of payout
 # assigned_card_uuid - the id you received assigning the card
-# extra - an hash to keep your additional data
+# extra - an array of hashes to keep your additional data
 MandarinApi.payment(order_id, amount, assigned_card_uuid, extra)
 ```
 `#payment` will return a hash with transaction id.
@@ -81,7 +81,7 @@ MandarinApi.payment(order_id, amount, assigned_card_uuid, extra)
 # order_id - id of order/bill, etc. in your system.
 # amount - sum of payout
 # assigned_card_uuid - the id you received assigning the card
-# extra - an hash to keep your additional data
+# extra - an array of hashes to keep your additional data
 MandarinApi.payout(order_id, amount, assigned_card_uuid, extra)
 ```
 `#payout` will return a hash with transaction id.
@@ -107,8 +107,10 @@ MandarinApi.charge(order_id, amount, user, optional)
     return: 'https://www.your-page-to-return-user-to.com',
     callback: 'https:/www.your-endpoint-for-callbacks.com'
   },
-  visible: { a: 'This value will be visible during payment process on Mandarin page' },
-  invisible: { some_additional_id: 12} # this value won't be visible and will be returned in callback
+  custom_values: [
+    { name: 'A name for value', value: 'This value will be visible during payment process on Mandarin page and return in callback' },
+    { name: 'Another value name', value: 'another value' }
+  ]
 }
 ```
 `#charge` will return a hash.

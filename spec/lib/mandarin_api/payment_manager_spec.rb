@@ -7,14 +7,14 @@ RSpec.describe MandarinApi::PaymentManager do
     {
       order_id: 123_321, amount: 35_000,
       assigned_card_uuid: '0eb51e74-e704-4c36-b5cb-8f0227621518',
-      extra: { a: 'A', b: 'B' }
+      custom_values: [{ name: 'a', value: 'A'}, { name: 'b', value: 'B' }]
     }
   end
   let(:normal_request_body) do
     {
       payment: { order_id: 123_321, action: action, price: 35_000 },
       target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' },
-      extra: [{ name: 'a', value: 'A' }, { name: 'b', value: 'B' }]
+      custom_values: [{ name: 'a', value: 'A'}, { name: 'b', value: 'B' }]
     }
   end
   let(:charge_request_body) do
@@ -22,7 +22,6 @@ RSpec.describe MandarinApi::PaymentManager do
       payment: { order_id: 123_321, action: action, price: 35_000 },
       customer_info: { email: email, phone: phone },
       custom_values: [{ name: 'a', value: 'A'}, { name: 'b', value: 'B' }],
-      extra: [{ name: 'one', value: 'One'}, { name: 'two', value: 'Two' }],
       urls: { callback: 'callback', return: 'return' }
     }
   end
@@ -34,7 +33,7 @@ RSpec.describe MandarinApi::PaymentManager do
     let(:params) do
       {
         order_id: 123_321, amount: 35_000, email: email, phone: phone,
-        custom_values: { a: 'A', b: 'B' }, extra: { one: 'One', two: 'Two' },
+        custom_values: [{ name: 'a', value: 'A'}, { name: 'b', value: 'B' }],
         urls: { callback: 'callback', return: 'return' }
       }
     end

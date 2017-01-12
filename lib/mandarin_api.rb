@@ -16,24 +16,23 @@ module MandarinApi
   def self.charge(order_id, amount, user, extra = {})
     params = {
       order_id: order_id, amount: amount, email: user.email, phone: user.phone,
-      urls: extra[:urls], custom_values: extra[:visible],
-      extra: extra[:invisible]
+      urls: extra[:urls], custom_values: extra[:custom_values]
     }
     MandarinApi::PaymentManager.new.perform_charge params
   end
 
-  def self.pay(order_id, amount, assigned_card_uuid, extra = {})
+  def self.pay(order_id, amount, assigned_card_uuid, custom_values = [])
     params = {
-      order_id: order_id, amount: amount, extra: extra,
+      order_id: order_id, amount: amount, custom_values: custom_values,
       assigned_card_uuid: assigned_card_uuid
     }
     MandarinApi::PaymentManager.new.perform_payment params
   end
 
-  def self.payout(order_id, amount, assigned_card_uuid, extra = {})
+  def self.payout(order_id, amount, assigned_card_uuid, custom_values = [])
     params = {
       order_id: order_id, amount: amount,
-      assigned_card_uuid: assigned_card_uuid, extra: extra
+      assigned_card_uuid: assigned_card_uuid, custom_values: custom_values
     }
     MandarinApi::PaymentManager.new.perform_payout params
   end
