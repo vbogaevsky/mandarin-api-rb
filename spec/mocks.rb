@@ -9,7 +9,8 @@ RSpec.shared_context 'mocks', shared_contex: :metadata do
     payout_body =
       JSON.generate(
         payment: { orderId: 123_321, action: 'payout', price: 35_000 },
-        target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' }
+        target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' },
+        customValues: [{ name: 'a', value: 'A' }, {name: 'b', value: 'B' }]
       )
     header = {
       'Accept' => '*/*', 'Accept-Encoding' => 'gzip, deflate',

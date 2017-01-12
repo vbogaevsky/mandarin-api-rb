@@ -46,7 +46,8 @@ RSpec.describe MandarinApi::Wrapper do
         },
         big_key_two: {
           key_a: 'a', key_b: 'b'
-        }
+        },
+        a_r_r_a_y: [{ name: 'a_key', value: 'a' }]
       }
     end
     let(:output) do
@@ -56,7 +57,8 @@ RSpec.describe MandarinApi::Wrapper do
         },
         'bigKeyTwo' => {
           'keyA' => 'a', 'keyB' => 'b'
-        }
+        },
+        'aRRAY' => [{ 'name' => 'a_key', 'value' => 'a' }]
       }
     end
     it 'input: multilevel hash with underscored keys-symbols, ' \

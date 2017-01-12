@@ -3,11 +3,22 @@ RSpec.describe MandarinApi::CardManager do
   let(:merchant_id) { 234 }
   let(:secret) { 'secret' }
   let(:user) { User.new('ololo@gmail.com', '8-909-999-88-77') }
+  let(:urls) do
+    {
+      return: 'https://www.ololol.com',
+      callback: 'https://www.ololol.com/callbacks'
+    }
+  end
 
   User = Struct.new('User', :email, :phone)
   describe 'assign_card' do
     let(:params) do
-      { customer_info: { email: 'ololo@gmail.com', phone: '+79099998877' } }
+      { customer_info: { email: 'ololo@gmail.com', phone: '+79099998877' },
+        urls: {
+          return: 'https://www.ololol.com',
+          callback: 'https://www.ololol.com/callbacks'
+        }
+      }
     end
     it 'calls wrapper instance with args' do
       allow(MandarinApi).to \
@@ -18,7 +29,7 @@ RSpec.describe MandarinApi::CardManager do
         .with('/api/card-bindings', params)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/card-bindings', params)
-      card_manager.assign_card user
+      card_manager.assign_card user, urls
     end
   end
 

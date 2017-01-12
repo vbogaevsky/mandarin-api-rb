@@ -45,6 +45,8 @@ module MandarinApi
       hash.keys.each do |key|
         new_hash[camelize(key.to_s)] = if hash[key].class == Hash
                                          key_transform hash[key]
+                                       elsif hash[key].class == Array
+                                         hash[key].map { |e| key_transform e }
                                        else
                                          hash[key]
                                        end

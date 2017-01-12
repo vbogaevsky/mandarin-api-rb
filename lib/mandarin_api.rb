@@ -5,33 +5,35 @@ module MandarinApi
     attr_accessor :config
   end
 
-  def self.assign_card(user)
-    MandarinApi::CardManager.new.assign_card user
+  def self.assign_card(user, urls = {})
+    MandarinApi::CardManager.new.assign_card user, urls
   end
 
   def self.oneway_assign_card(user, card)
     MandarinApi::CardManager.new.one_side_assign_card user, card
   end
 
-  def self.charge(order_id, amount, user)
+  def self.charge(order_id, amount, user, extra = {})
     params = {
-      order_id: order_id, amount: amount, email: user.email, phone: user.phone
+      order_id: order_id, amount: amount, email: user.email, phone: user.phone,
+      urls: extra[:urls], custom_values: extra[:visible],
+      extra: extra[:invisible]
     }
     MandarinApi::PaymentManager.new.perform_charge params
   end
 
-  def self.pay(order_id, amount, assigned_card_uuid)
+  def self.pay(order_id, amount, assigned_card_uuid, extra = {})
     params = {
-      order_id: order_id, amount: amount,
+      order_id: order_id, amount: amount, extra: extra,
       assigned_card_uuid: assigned_card_uuid
     }
     MandarinApi::PaymentManager.new.perform_payment params
   end
 
-  def self.payout(order_id, amount, assigned_card_uuid)
+  def self.payout(order_id, amount, assigned_card_uuid, extra = {})
     params = {
       order_id: order_id, amount: amount,
-      assigned_card_uuid: assigned_card_uuid
+      assigned_card_uuid: assigned_card_uuid, extra: extra
     }
     MandarinApi::PaymentManager.new.perform_payout params
   end
@@ -43,8 +45,7 @@ module MandarinApi
 
   def self.rebill(order_id, amount, transaction_uuid)
     params = {
-      order_id: order_id, amount: amount,
-      transaction_uuid: transaction_uuid
+      order_id: order_id, amount: amount, transaction_uuid: transaction_uuid
     }
     MandarinApi::PaymentManager.new.perform_rebill params
   end

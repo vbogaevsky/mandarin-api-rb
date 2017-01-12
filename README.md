@@ -13,12 +13,22 @@ MandarinApi.configure do |config|
   config.request_url = 'https://secure.mandarinpay.com'
 end
 ```
+
+
+
 ###**Example of assigning a card:**
 ```ruby
-MandarinApi.assign_card user
+MandarinApi.assign_card user, urls
 ```
 `user` should be an instance or a Struct, and should respond to `#email` and `#phone` methods
 `#phone` should be serialized, for example '+79091234567' is correctly serialized number.
+`urls` is a hash that passes callback and redirect URLs:
+```ruby
+  {
+    return: 'https://www.your-page-to-return-user-to.com',
+    callback: 'https:/www.your-endpoint-for-callbacks.com'
+  }
+```
 `#assign_card` will return a hash.
 ###**Example:**
 ```ruby
@@ -29,6 +39,8 @@ MandarinApi.assign_card user
 }
 ```
 Keep id, it will be used for pay/payouts requests. Use userWebLink to redirect user to Mandarin page for card data input.
+
+
 
 ###**Example of oneway card binding:**
 ```ruby
@@ -47,12 +59,14 @@ Keep id, it will be used for pay/payouts requests. Use userWebLink to redirect u
 Oneway binded card can only be used for payouts.
 
 
+
 ###**Example of performing payment:**
 ```ruby
 # order_id - id of order/bill, etc. in your system.
 # amount - sum of payout
 # assigned_card_uuid - the id you received assigning the card
-MandarinApi.payment(order_id, amount, assigned_card_uuid)
+# extra - an hash to keep your additional data
+MandarinApi.payment(order_id, amount, assigned_card_uuid, extra)
 ```
 `#payment` will return a hash with transaction id.
 ###**Example:**
@@ -60,12 +74,15 @@ MandarinApi.payment(order_id, amount, assigned_card_uuid)
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
 
+
+
 ###**Example of performing payout:**
 ```ruby
 # order_id - id of order/bill, etc. in your system.
 # amount - sum of payout
 # assigned_card_uuid - the id you received assigning the card
-MandarinApi.payout(order_id, amount, assigned_card_uuid)
+# extra - an hash to keep your additional data
+MandarinApi.payout(order_id, amount, assigned_card_uuid, extra)
 ```
 `#payout` will return a hash with transaction id.
 ###**Example:**
@@ -73,14 +90,27 @@ MandarinApi.payout(order_id, amount, assigned_card_uuid)
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
 
+
+
 ###**Example of charging user without card binding**
 ```ruby
 # order_id - id of order/bill, etc. in your system.
 # amount - sum of payout
-MandarinApi.charge(order_id, amount, user)
+MandarinApi.charge(order_id, amount, user, optional)
 ```
 `user` should be an instance or a Struct, and should respond to `#email` and `#phone` methods
 `#phone` should be serialized, for example '+79091234567' is correctly serialized number.
+`optional` is an hash to keep URLs, data visible on Mandarin page, and your technical data:
+```ruby
+{
+  urls: {
+    return: 'https://www.your-page-to-return-user-to.com',
+    callback: 'https:/www.your-endpoint-for-callbacks.com'
+  },
+  visible: { a: 'This value will be visible during payment process on Mandarin page' },
+  invisible: { some_additional_id: 12} # this value won't be visible and will be returned in callback
+}
+```
 `#charge` will return a hash.
 ###**Example:**
 ```ruby
@@ -90,6 +120,8 @@ MandarinApi.charge(order_id, amount, user)
     '?transaction=0eb51e74-e704-4c36-b5cb-8f0227621518"
 }
 ```
+
+
 
 ###**Example of performing refund:**
 ```ruby
@@ -103,6 +135,8 @@ MandarinApi.refund(order_id, transaction_uuid)
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
 
+
+
 ###**Example of performing rebill:**
 ```ruby
 # order_id - id of order/bill, etc. in your system.
@@ -115,6 +149,7 @@ MandarinApi.rebill(order_id, amount, transaction_uuid)
 ```ruby
 { 'id' => '721a5185314740aaa304278fb1d8ee63' }
 ```
+
 
 
 You will have to provide a link to receive callbacks from Mandarin.

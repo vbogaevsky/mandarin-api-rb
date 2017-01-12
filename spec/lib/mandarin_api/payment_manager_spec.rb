@@ -6,30 +6,36 @@ RSpec.describe MandarinApi::PaymentManager do
   let(:params) do
     {
       order_id: 123_321, amount: 35_000,
-      assigned_card_uuid: '0eb51e74-e704-4c36-b5cb-8f0227621518'
+      assigned_card_uuid: '0eb51e74-e704-4c36-b5cb-8f0227621518',
+      extra: { a: 'A', b: 'B' }
     }
   end
   let(:normal_request_body) do
     {
       payment: { order_id: 123_321, action: action, price: 35_000 },
-      target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' }
+      target: { card: '0eb51e74-e704-4c36-b5cb-8f0227621518' },
+      extra: [{ name: 'a', value: 'A' }, { name: 'b', value: 'B' }]
     }
   end
   let(:charge_request_body) do
     {
       payment: { order_id: 123_321, action: action, price: 35_000 },
       customer_info: { email: email, phone: phone },
-      custom_values: []
+      custom_values: [{ name: 'a', value: 'A'}, { name: 'b', value: 'B' }],
+      extra: [{ name: 'one', value: 'One'}, { name: 'two', value: 'Two' }],
+      urls: { callback: 'callback', return: 'return' }
     }
   end
+
   describe '#perform_charge' do
     let(:email) { Faker::Internet.free_email }
     let(:phone) { "+7#{Faker::Number.between(100_000_000, 999_999_999)}" }
     let(:action) { 'pay' }
     let(:params) do
       {
-        order_id: 123_321, amount: 35_000,
-        email: email, phone: phone, custom_values: []
+        order_id: 123_321, amount: 35_000, email: email, phone: phone,
+        custom_values: { a: 'A', b: 'B' }, extra: { one: 'One', two: 'Two' },
+        urls: { callback: 'callback', return: 'return' }
       }
     end
     it 'calls wrapper instance with args' do
