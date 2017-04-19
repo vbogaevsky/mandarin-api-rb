@@ -51,10 +51,12 @@ module MandarinApi
     end
 
     def refund_request_body(params, action)
-      {
+      body = {
         payment: { order_id: params[:order_id], action: action },
         target: { transaction: params[:transaction_uuid] }
       }
+      body[:payment][:price] = params[:price] if params[:price]
+      body
     end
 
     def rebill_request_body(params, action)

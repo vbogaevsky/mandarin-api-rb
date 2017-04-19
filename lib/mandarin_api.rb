@@ -37,8 +37,11 @@ module MandarinApi
     MandarinApi::PaymentManager.new.perform_payout params
   end
 
-  def self.refund(order_id, transaction_uuid)
-    params = { order_id: order_id, transaction_uuid: transaction_uuid }
+  def self.refund(order_id, transaction_uuid, amount)
+    params = {
+      order_id: order_id, transaction_uuid: transaction_uuid,
+      amount: amount 
+    }
     MandarinApi::PaymentManager.new.perform_refund params
   end
 
