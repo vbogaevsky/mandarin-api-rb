@@ -110,7 +110,7 @@ RSpec.describe MandarinApi::PaymentManager do
     let(:params_w_price) do
       {
         order_id: 123_321, transaction_uuid: '43913ddc000c4d3990fddbd3980c1725',
-        price: 1_000
+        amount: 1_000
       }
     end
     it 'calls wrapper instance with args' do

@@ -56,7 +56,7 @@ module MandarinApi
         payment: { order_id: params[:order_id], action: action },
         target: { transaction: params[:transaction_uuid] }
       }
-      body[:payment][:price] = params[:price] if params[:price]
+      body[:payment][:price] = params[:amount] if params[:amount]
       body
     end
 

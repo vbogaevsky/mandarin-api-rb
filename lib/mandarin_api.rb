@@ -31,24 +31,19 @@ module MandarinApi
 
   def self.payout(order_id, amount, assigned_card_uuid, custom_values = [])
     params = {
-      order_id: order_id, amount: amount,
-      assigned_card_uuid: assigned_card_uuid, custom_values: custom_values
+      order_id: order_id, amount: amount, assigned_card_uuid: assigned_card_uuid,
+      custom_values: custom_values
     }
     MandarinApi::PaymentManager.new.perform_payout params
   end
 
   def self.refund(order_id, transaction_uuid, amount)
-    params = {
-      order_id: order_id, transaction_uuid: transaction_uuid,
-      amount: amount 
-    }
+    params = { order_id: order_id, transaction_uuid: transaction_uuid, amount: amount }
     MandarinApi::PaymentManager.new.perform_refund params
   end
 
   def self.rebill(order_id, amount, transaction_uuid)
-    params = {
-      order_id: order_id, amount: amount, transaction_uuid: transaction_uuid
-    }
+    params = { order_id: order_id, amount: amount, transaction_uuid: transaction_uuid }
     MandarinApi::PaymentManager.new.perform_rebill params
   end
 
