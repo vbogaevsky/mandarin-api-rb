@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('pry-doc', '~> 0')
   s.add_development_dependency('rdoc', '>= 2.4.2', '< 5.0')
   s.add_development_dependency('faker', '>= 1.6', '< 1.7')
-  s.add_development_dependency('pry-byebug')
+  s.add_development_dependency('pry-byebug', '~> 3.0')
 
   s.add_dependency 'rest-client', '>= 2.0', '< 3.0'
 

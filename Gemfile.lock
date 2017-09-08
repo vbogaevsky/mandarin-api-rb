@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mandarin-api (0.3.0)
+    mandarin-api (0.3.1)
       rest-client (>= 2.0, < 3.0)
 
 GEM
@@ -87,7 +87,7 @@ DEPENDENCIES
   faker (>= 1.6, < 1.7)
   mandarin-api!
   pry (~> 0)
-  pry-byebug
+  pry-byebug (~> 3.0)
   pry-doc (~> 0)
   rake
   rb-readline (~> 0.5)
