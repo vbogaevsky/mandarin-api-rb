@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+
 Gem::Specification.new do |s|
   s.name = 'mandarin-api'
-  s.version = '0.2.2'
+  s.version = '0.3.0'
   s.authors = ['Vladimir Bogaevsky']
   s.email = 'gitvbogaevsky@gmail.com'
   s.licenses = ['MIT']
@@ -15,10 +16,11 @@ Gem::Specification.new do |s|
   s.add_development_dependency('webmock', '~> 2.1')
   s.add_development_dependency('rspec', '~> 3.0')
   s.add_development_dependency('pry', '~> 0')
+  s.add_development_dependency('rb-readline', '~> 0.5')
   s.add_development_dependency('pry-doc', '~> 0')
   s.add_development_dependency('rdoc', '>= 2.4.2', '< 5.0')
-  s.add_development_dependency('rubocop', '~> 0')
   s.add_development_dependency('faker', '>= 1.6', '< 1.7')
+  s.add_development_dependency('pry-byebug')
 
   s.add_dependency 'rest-client', '>= 2.0', '< 3.0'
 

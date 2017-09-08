@@ -1,12 +1,16 @@
 # frozen_string_literal: true
+require 'logger'
+require 'active_support/logger'
 
 RSpec.describe MandarinApi::Wrapper do
   include_context 'mocks'
 
   let(:wrapper) do
     MandarinApi::Wrapper
-      .new(merchant_id: rand(1000), secret: SecureRandom.hex(5))
+      .new(merchant_id: rand(1000), secret: SecureRandom.hex(5), logger: logger)
   end
+  let(:logger) { nil }
+
   describe 'request' do
     let(:params) do
       {
@@ -24,11 +28,58 @@ RSpec.describe MandarinApi::Wrapper do
           '?id=0eb51e74-e704-4c36-b5cb-8f0227621518'
       }
     end
+
     it 'sends request with passed action' do
       allow(wrapper).to receive(:generate_x_auth_header).and_return(x_auth)
       allow(MandarinApi).to \
         receive_message_chain(:config, :request_url).and_return(mandarin_adress)
       expect(wrapper.request('api/card-bindings', params)).to eq expected
+    end
+
+    describe 'logging' do
+      before :example do
+        `mkdir spec/temp`
+      end
+
+      after :example do
+        `rm -rf spec/temp`
+      end
+
+      let(:actual) do
+        File.readlines('spec/temp/logfile').last
+      end
+
+      let(:expected) do
+        header = { content_type: :json, x_auth: x_auth }
+        url = URI.join(MandarinApi.config.request_url, 'api/card-bindings').to_s
+        "Calling MandarinBank at: #{url}; body: #{params}, header: #{header}\n"
+      end
+
+      context 'Logger' do
+        let(:logger) do
+          Logger.new('spec/temp/logfile').tap do |logger|
+            logger.formatter = proc { |_severity, _datetime, _progname, msg| "#{msg}\n" }
+          end
+        end
+        it 'logs' do
+          allow(wrapper).to receive(:generate_x_auth_header).and_return(x_auth)
+          allow(MandarinApi).to \
+            receive_message_chain(:config, :request_url).and_return(mandarin_adress)
+          wrapper.request('api/card-bindings', params)
+          expect(actual).to eq expected
+        end
+      end
+
+      context 'ActiveSupport::Logger' do
+        let(:logger) { ActiveSupport::Logger.new('spec/temp/logfile') }
+        it 'logs' do
+          allow(wrapper).to receive(:generate_x_auth_header).and_return(x_auth)
+          allow(MandarinApi).to \
+            receive_message_chain(:config, :request_url).and_return(mandarin_adress)
+          wrapper.request('api/card-bindings', params)
+          expect(actual).to eq expected
+        end
+      end
     end
   end
   describe 'camelize' do

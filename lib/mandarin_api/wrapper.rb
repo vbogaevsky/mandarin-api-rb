@@ -1,16 +1,19 @@
 # frozen_string_literal: true
+
 require 'json'
 require 'rest-client'
 module MandarinApi
   # Wraps request sending
   class Wrapper
-    def initialize(merchant_id:, secret:)
+    def initialize(merchant_id:, secret:, logger: nil)
       @merchant_id = merchant_id
       @secret = secret
+      @logger = logger
     end
 
     def request(endpoint, params = {})
       url = URI.join(MandarinApi.config.request_url, endpoint).to_s
+      perform_loging url, params, header
       RestClient.post(url, json(params), header) do |response|
         case response.code
         when 200
@@ -22,6 +25,11 @@ module MandarinApi
     end
 
     private
+
+    def perform_loging(url, params, header)
+      return if @logger.nil?
+      @logger.info "Calling MandarinBank at: #{url}; body: #{params}, header: #{header}"
+    end
 
     def header
       {
@@ -43,10 +51,9 @@ module MandarinApi
     def key_transform(hash)
       new_hash = {}
       hash.keys.each do |key|
-        new_hash[camelize(key.to_s)] = if hash[key].class == Hash
-                                         key_transform hash[key]
-                                       elsif hash[key].class == Array
-                                         hash[key].map { |e| key_transform e }
+        new_hash[camelize(key.to_s)] = case hash[key]
+                                       when Hash then key_transform hash[key]
+                                       when Array then hash[key].map { |e| key_transform e }
                                        else
                                          hash[key]
                                        end

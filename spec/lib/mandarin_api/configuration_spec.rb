@@ -18,4 +18,10 @@ RSpec.describe MandarinApi::Configuration do
       expect(config.request_url).to eq 'www.google.com'
     end
   end
+  describe '#logger=' do
+    it 'can set value' do
+      config.logger = Logger
+      expect(config.logger).to eq Logger
+    end
+  end
 end

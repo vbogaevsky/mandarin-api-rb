@@ -2,6 +2,7 @@
 require 'webmock/rspec'
 require 'mocks'
 require 'faker'
+require 'pry-byebug'
 
 Dir['./lib/**/*.rb'].each { |f| require f }
 
