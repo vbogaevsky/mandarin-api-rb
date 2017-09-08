@@ -27,7 +27,8 @@ module MandarinApi
     def perform(params, action, body)
       MandarinApi::Wrapper.new(
         merchant_id: MandarinApi.config.merchant_id,
-        secret: MandarinApi.config.secret
+        secret: MandarinApi.config.secret,
+        logger: MandarinApi.config.logger
       ).request('/api/transactions', send(body, params, action))
     end
 

@@ -25,6 +25,8 @@ RSpec.describe MandarinApi::CardManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/card-bindings', params)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)

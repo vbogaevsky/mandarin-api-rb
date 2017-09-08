@@ -42,6 +42,8 @@ RSpec.describe MandarinApi::PaymentManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/transactions', charge_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
@@ -57,6 +59,8 @@ RSpec.describe MandarinApi::PaymentManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/transactions', normal_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
@@ -72,6 +76,8 @@ RSpec.describe MandarinApi::PaymentManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/transactions', normal_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
@@ -112,6 +118,8 @@ RSpec.describe MandarinApi::PaymentManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/transactions', refund_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
@@ -124,6 +132,8 @@ RSpec.describe MandarinApi::PaymentManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/transactions', refund_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
@@ -150,6 +160,8 @@ RSpec.describe MandarinApi::PaymentManager do
         receive_message_chain(:config, :merchant_id).and_return(merchant_id)
       allow(MandarinApi).to \
         receive_message_chain(:config, :secret).and_return(merchant_id)
+      allow(MandarinApi).to \
+        receive_message_chain(:config, :logger).and_return(nil)
       allow_any_instance_of(MandarinApi::Wrapper).to receive(:request)
         .with('/api/transactions', rebill_request_body)
       expect_any_instance_of(MandarinApi::Wrapper).to receive(:request)
