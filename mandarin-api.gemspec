@@ -13,8 +13,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.md', 'plantuml/callbacks.puml']
   s.require_paths = ['lib']
 
-  s.add_development_dependency('rspec', '~> 3.7.0')
-  s.add_development_dependency('webmock', '~> 3.1.1')
+  s.add_development_dependency('rspec',   '~> 3.7', '>= 3.7.0')
+  s.add_development_dependency('webmock', '~> 3.1', '>= 3.1.1')
 
   s.add_dependency('curb', '~> 0.9.4')
 
