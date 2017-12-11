@@ -27,8 +27,8 @@ RSpec.describe MandarinApi::PaymentManager do
   end
 
   describe '#perform_charge' do
-    let(:email) { Faker::Internet.free_email }
-    let(:phone) { "+7#{Faker::Number.between(100_000_000, 999_999_999)}" }
+    let(:email) { "email-email+#{rand(1000)}@gmail.com" }
+    let(:phone) { "+7#{rand(100_000_000..999_999_999)}" }
     let(:action) { 'pay' }
     let(:params) do
       {

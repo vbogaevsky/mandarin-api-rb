@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = 'mandarin-api'
-  s.version = '0.4.0'
+  s.version = '1.0.0'
   s.authors = ['Vladimir Bogaevsky']
   s.email = 'gitvbogaevsky@gmail.com'
   s.licenses = ['MIT']
@@ -13,16 +13,10 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.md', 'plantuml/callbacks.puml']
   s.require_paths = ['lib']
 
-  s.add_development_dependency('webmock', '~> 2.1')
-  s.add_development_dependency('rspec', '~> 3.0')
-  s.add_development_dependency('pry', '~> 0')
-  s.add_development_dependency('rb-readline', '~> 0.5')
-  s.add_development_dependency('pry-doc', '~> 0')
-  s.add_development_dependency('rdoc', '>= 2.4.2', '< 5.0')
-  s.add_development_dependency('faker', '>= 1.6', '< 1.7')
-  s.add_development_dependency('pry-byebug', '~> 3.0')
+  s.add_development_dependency('rspec', '~> 3.7.0')
+  s.add_development_dependency('webmock', '~> 3.1.1')
 
-  s.add_dependency 'rest-client', '>= 2.0', '< 3.0'
+  s.add_dependency('curb', '~> 0.9.4')
 
-  s.required_ruby_version = '>= 2.2.0'
+  s.required_ruby_version = '>= 2.4.2'
 end

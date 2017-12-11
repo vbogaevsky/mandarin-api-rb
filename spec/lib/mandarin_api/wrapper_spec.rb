@@ -1,24 +1,16 @@
 # frozen_string_literal: true
 require 'logger'
-require 'active_support/logger'
 
 RSpec.describe MandarinApi::Wrapper do
   include_context 'mocks'
 
   let(:wrapper) do
-    MandarinApi::Wrapper
-      .new(merchant_id: rand(1000), secret: SecureRandom.hex(5), logger: logger)
+    MandarinApi::Wrapper.new(merchant_id: rand(1000), secret: SecureRandom.hex(5), logger: logger)
   end
   let(:logger) { nil }
 
   describe 'request' do
-    let(:params) do
-      {
-        customer_info: {
-          email: 'ololo@gmail.com', phone: '8-909-999-88-77'
-        }
-      }
-    end
+    let(:params) { { customer_info: { email: 'ololo@gmail.com', phone: '8-909-999-88-77' } } }
     let(:x_auth) { 'x-auth' }
     let(:mandarin_adress) { 'https://secure.mandarinpay.com/' }
     let(:expected) do
@@ -50,7 +42,7 @@ RSpec.describe MandarinApi::Wrapper do
       end
 
       let(:expected) do
-        header = { content_type: :json, x_auth: x_auth }
+        header = { 'content_type' => 'application/json', 'x_auth' => x_auth }
         url = URI.join(MandarinApi.config.request_url, 'api/card-bindings').to_s
         "Calling MandarinBank at: #{url}; body: #{params}, header: #{header}\n"
       end
@@ -61,17 +53,6 @@ RSpec.describe MandarinApi::Wrapper do
             logger.formatter = proc { |_severity, _datetime, _progname, msg| "#{msg}\n" }
           end
         end
-        it 'logs' do
-          allow(wrapper).to receive(:generate_x_auth_header).and_return(x_auth)
-          allow(MandarinApi).to \
-            receive_message_chain(:config, :request_url).and_return(mandarin_adress)
-          wrapper.request('api/card-bindings', params)
-          expect(actual).to eq expected
-        end
-      end
-
-      context 'ActiveSupport::Logger' do
-        let(:logger) { ActiveSupport::Logger.new('spec/temp/logfile') }
         it 'logs' do
           allow(wrapper).to receive(:generate_x_auth_header).and_return(x_auth)
           allow(MandarinApi).to \

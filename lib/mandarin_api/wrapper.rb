@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require 'securerandom'
 require 'json'
-require 'rest-client'
+require 'curb'
+
 module MandarinApi
   # Wraps request sending
   class Wrapper
@@ -14,14 +16,12 @@ module MandarinApi
     def request(endpoint, params = {})
       url = URI.join(MandarinApi.config.request_url, endpoint).to_s
       perform_loging url, params, header
-      RestClient.post(url, json(params), header) do |response|
-        case response.code
-        when 200
-          JSON.parse response.body
-        else
-          { 'status' => response.code, 'error' => 'Invalid request' }
-        end
-      end
+      curl = Curl::Easy.new(url)
+      curl.headers = header
+      curl.post(json(params))
+      body = JSON.parse(curl.body_str)
+      return body if curl.response_code == 200
+      { 'status' => curl.response_code, 'error' => body }
     end
 
     private
@@ -33,8 +33,8 @@ module MandarinApi
 
     def header
       {
-        content_type: :json,
-        x_auth: generate_x_auth_header(@merchant_id, @secret)
+        'content_type' => 'application/json',
+        'x_auth' => generate_x_auth_header(@merchant_id, @secret)
       }
     end
 
@@ -50,7 +50,7 @@ module MandarinApi
 
     def key_transform(hash)
       new_hash = {}
-      hash.keys.each do |key|
+      hash.each_key do |key|
         new_hash[camelize(key.to_s)] = case hash[key]
                                        when Hash then key_transform hash[key]
                                        when Array then hash[key].map { |e| key_transform e }
