@@ -42,7 +42,7 @@ RSpec.describe MandarinApi::Wrapper do
       end
 
       let(:expected) do
-        header = { 'content_type' => 'application/json', 'x_auth' => x_auth }
+        header = { 'Content-Type' => 'application/json', 'X-Auth' => x_auth }
         url = URI.join(MandarinApi.config.request_url, 'api/card-bindings').to_s
         "Calling MandarinBank at: #{url}; body: #{params}, header: #{header}\n"
       end

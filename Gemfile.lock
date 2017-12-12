@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mandarin-api (1.0.0)
+    mandarin-api (1.0.1)
       curb (~> 0.9.4)
 
 GEM

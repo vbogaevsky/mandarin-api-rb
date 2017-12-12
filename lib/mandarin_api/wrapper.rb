@@ -18,7 +18,7 @@ module MandarinApi
       perform_loging url, params, header
       curl = Curl::Easy.new(url)
       curl.headers = header
-      curl.post(json(params))
+       curl.post(json(params))
       body = JSON.parse(curl.body_str)
       return body if curl.response_code == 200
       { 'status' => curl.response_code, 'error' => body }
@@ -33,8 +33,8 @@ module MandarinApi
 
     def header
       {
-        'content_type' => 'application/json',
-        'x_auth' => generate_x_auth_header(@merchant_id, @secret)
+        'Content-Type' => 'application/json',
+        'X-Auth' => generate_x_auth_header(@merchant_id, @secret)
       }
     end
 
